@@ -1,0 +1,17 @@
+{
+  "name": "yt-dldr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "super.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "supply-videos-list": "node ./src/main.js supply",
+    "download-videos": "node ./src/main.js download"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "youtube-mp3-downloader": "^0.5.3"
+  }
+}
