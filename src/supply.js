@@ -1,13 +1,18 @@
-exports.supplyVideos = async() => {
+exports.supplyVideos = async(supplying_bulk = false) => {
     try{
         // Require
+        let fs = require("fs")
         let fetch = require("node-fetch")
-        const {SUPPLY_FOLDER, YT_FINAL_RESULTS, MAX_VIDEO_DURATION, SEARCH_VALUES} = require("./config.js")
+        const {SUPPLY_FOLDER, YT_FINAL_RESULTS, MAX_VIDEO_DURATION} = require("./config.js")
         const {getDurationFromIsoDuration, writeToFile} = require("./utils.js")
         const {YT_API_KEY} = require("../env.js")
 
-        const YT_NUM_EXTRA_RESULTS = parseInt(YT_FINAL_RESULTS * 2)  // We only want the videos, so we need to fetch a little more links in order to skip channels and other useless reults such as channels (:
+        const YT_NUM_EXTRA_RESULTS = parseInt(YT_FINAL_RESULTS * 0.6)  // We only want the videos, so we need to fetch a little more links in order to skip channels and other useless reults such as channels (:
         const YT_NUM_RESULTS = YT_FINAL_RESULTS + YT_NUM_EXTRA_RESULTS 
+
+        let SEARCH_VALUES
+        if(!supplying_bulk) SEARCH_VALUES = require("./config.js")
+        else SEARCH_VALUES = (await fs.promises.readFile("./src/config_urls.txt")).toString().split("\n")
 
         let results = []
         for(searchValue of SEARCH_VALUES){
@@ -38,7 +43,6 @@ exports.supplyVideos = async() => {
             })
         }
 
-        let fs = require("fs")
         if(!fs.existsSync(SUPPLY_FOLDER))
             fs.mkdirSync(SUPPLY_FOLDER)
         await writeToFile(`${SUPPLY_FOLDER}/videos`, JSON.stringify(results, null, 4), "js")

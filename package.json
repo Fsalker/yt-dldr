@@ -5,8 +5,11 @@
   "main": "super.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "supply-videos-list": "node ./src/main.js supply",
-    "download-videos": "node ./src/main.js download"
+    "supply-videos": "node ./src/main.js supply",
+    "supply-videos-bulk": "node ./src/main.js supply-bulk",
+    "download-videos": "node ./src/main.js download",
+    "supply-and-download": "node ./src/main.js supply && node ./src/main.js download",
+    "supply-and-download-bulk": "node ./src/main.js supply-bulk && node ./src/main.js download"
   },
   "keywords": [],
   "author": "",
